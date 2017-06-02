@@ -20,7 +20,6 @@ public class PropertyExampleContinuedTest {
         System.setOut(out);
     }
 
-    @Ignore
     @Test
     public void bindAndUnbindOnePropertyToAnother() throws Exception {
         propertyExample.bindAndUnbindOnePropertyToAnother();
