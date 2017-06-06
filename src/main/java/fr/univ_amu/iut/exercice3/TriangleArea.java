@@ -8,6 +8,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import static javafx.beans.binding.Bindings.negate;
+import static javafx.beans.binding.Bindings.when;
+
 public class TriangleArea {
 
     private IntegerProperty x1 = new SimpleIntegerProperty(0);
@@ -139,8 +142,9 @@ public class TriangleArea {
     }
 
     void printResult() {
+       // "For P1(0,0), P2(6,0), P3(4,3), the area of triangle ABC is 9.0"
 
-
+        System.out.println("For P1(" + x1.get() + ',' + y1.get() + "), P2(" + x2.get() + ',' + y2.get() + "), P3(" + x3.get() + ',' + y3.get() + "), the area of triangle ABC is " + area.get());
     }
 
     private void createBinding() {
@@ -148,6 +152,13 @@ public class TriangleArea {
 
         NumberBinding b1 = Bindings.subtract(Bindings.multiply(x1, y2), Bindings.multiply(x1, y3));
         NumberBinding b2 = Bindings.add(b1, Bindings.multiply(x2, y3));
+        NumberBinding b3 = Bindings.subtract(b2, Bindings.multiply(x2, y1));
+        NumberBinding b4 = Bindings.add(b3, Bindings.multiply(x3, y1));
+        NumberBinding b5 = Bindings.divide(Bindings.subtract(b4, Bindings.multiply(x3, y2)), 2.0);
+
+        NumberBinding b6 = when(b5.greaterThan(0)).then(b5).otherwise(negate(b5));
+
+        area.bind(b6);
     }
 
 

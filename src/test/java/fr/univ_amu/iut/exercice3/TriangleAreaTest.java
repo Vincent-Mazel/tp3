@@ -35,7 +35,6 @@ public class TriangleAreaTest {
         assertThat(triangleArea.getArea()).isEqualTo(0.5);
     }
 
-    @Ignore
     @Test
     public void should_triangle1_have_a_correct_area() throws Exception {
         triangleArea.setP1(0, 0);
@@ -44,7 +43,6 @@ public class TriangleAreaTest {
         assertThat(triangleArea.getArea()).isEqualTo(9);
     }
 
-    @Ignore
     @Test
     public void should_triangle2_have_a_correct_area() throws Exception {
         triangleArea.setP1(1, 0);
@@ -53,7 +51,6 @@ public class TriangleAreaTest {
         assertThat(triangleArea.getArea()).isEqualTo(1.5);
     }
 
-    @Ignore
     @Test
     public void printResult() throws Exception {
         triangleArea.setP1(0, 0);
