@@ -1,5 +1,6 @@
 package fr.univ_amu.iut.exercice7;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanExpression;
 import javafx.beans.binding.NumberBinding;
 import javafx.beans.property.DoubleProperty;
@@ -17,7 +18,7 @@ public class Ball {
     private final DoubleProperty velocityY; //en pixel par nanosecond
     private final DoubleProperty radius;
     private final Pane parent;
-    private Circle ball;
+    private Circle ball = new Circle();
 
     private BooleanExpression isBouncingOffVerticalWall;
     private BooleanExpression isBouncingOffHorizontalWall;
@@ -26,14 +27,32 @@ public class Ball {
     private NumberBinding bounceOffHorizontalWall;
 
     public Ball(Pane parent) {
-        throw new RuntimeException("Not yet implemented !"); 
+        velocityX = new SimpleDoubleProperty(150E-9);
+        velocityY = new SimpleDoubleProperty(150E-9);
+        positionX = new SimpleDoubleProperty(20);
+        positionY = new SimpleDoubleProperty(50);
+        radius = new SimpleDoubleProperty(5);
+        this.parent = parent;
+        parent.getChildren().add(ball);
+        this.createBindings();
     }
 
     private void createBindings() {
-        throw new RuntimeException("Not yet implemented !"); 
+        ball.centerYProperty().bind(positionY);
+        ball.centerXProperty().bind(positionX);
+        ball.radiusProperty().bind(radius);
+
+        isBouncingOffHorizontalWall = positionX.greaterThan(parent.widthProperty().subtract(radius)).or(positionX.lessThan(radius));
+        isBouncingOffVerticalWall = positionY.greaterThan(parent.heightProperty().subtract(radius)).or(positionY.lessThan(radius));
+
+        bounceOffHorizontalWall = Bindings.when(isBouncingOffHorizontalWall).then(velocityX.negate()).otherwise(velocityX);
+        bounceOffVerticalWall = Bindings.when(isBouncingOffVerticalWall).then(velocityY.negate()).otherwise(velocityY);
     }
 
     public void move(long elapsedTimeInNanoseconds) {
-        throw new RuntimeException("Not yet implemented !"); 
+        velocityX.setValue(bounceOffHorizontalWall.getValue());
+        velocityY.setValue(bounceOffVerticalWall.getValue());
+        positionY.setValue(positionY.getValue()+velocityY.getValue()*elapsedTimeInNanoseconds);
+        positionX.setValue(positionX.getValue()+velocityX.getValue()*elapsedTimeInNanoseconds);
     }
 }
