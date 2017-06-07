@@ -2,6 +2,7 @@ package fr.univ_amu.iut.exercice4;
 
 import fr.univ_amu.iut.exercice3.TriangleArea;
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -96,12 +97,23 @@ public class TriangleAreaCalculator extends Application {
     }
 
     private void addSliders() {
+        root.add(x1Label, 0, 2);
         root.add(x1Slider, 1, 2);
+
         root.add(y1Slider, 1, 3);
+        root.add(y1Label, 0, 3);
+
         root.add(x2Slider, 1, 5);
+        root.add(x2Label, 0, 5);
+
         root.add(y2Slider, 1, 6);
+        root.add(y2Label, 0, 6);
+
         root.add(x3Slider, 1, 8);
+        root.add(x3Label, 0, 8);
+
         root.add(y3Slider, 1, 9);
+        root.add(y3Label, 0, 9);
     }
 
     private void addPointLabels() {
@@ -109,10 +121,12 @@ public class TriangleAreaCalculator extends Application {
         root.add(labelP1, 1, 1);
 
         Label labelP2 = new Label("P2");
-        root.add(labelP1, 1, 4);
+        root.add(labelP2, 1, 4);
 
         Label labelP3 = new Label("P3");
-        root.add(labelP1, 1, 7);
+        root.add(labelP3, 1, 7);
+
+        root.getColumnConstraints().get(1).setHalignment(HPos.CENTER);
     }
 
     private void createBinding() {
@@ -124,5 +138,10 @@ public class TriangleAreaCalculator extends Application {
         triangleArea.y3Property().bind(y3Slider.valueProperty());
 
         areaTextField.textProperty().bind(triangleArea.areaProperty().asString());
+    }
+
+    public static void main (String [] args)
+    {
+        launch(args);
     }
 }
